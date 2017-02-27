@@ -18,21 +18,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
-    // This gets the data back from the webview
-    @JavascriptInterface
-    @SuppressWarnings("unused")
-    public void sendData(String data) {
-        //Get the string value to process
-        System.out.println("Got data from webview: "+data);
-    }
-
-    @JavascriptInterface
-    public void logSomething(String something) {
-        System.out.println("Logged something: " + something);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final WebLoader loader = new WebLoader();
 
 
         super.onCreate(savedInstanceState);
@@ -40,41 +28,24 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Setup webview
-        final WebView myWebView = (WebView) findViewById(R.id.myWebView);
-        WebSettings webSettings = myWebView.getSettings();
-        // This makes a "Native" object in our webview that we can use to pass data back.
-        myWebView.addJavascriptInterface(this, "Native");
-
-
-        myWebView.setWebViewClient(new WebViewClient(){
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url){
-                System.out.println("Overriding webview: "+url);
-                view.loadUrl(url);
-                return true;
-            }
-        });
-
-        // This enables javascript, which webviews have disabled by default
-        webSettings.setJavaScriptEnabled(true);
+        // Create the initial WebLoader
+        loader.createWebView(R.id.myWebView, this);
+        // This loads data from src/main/assets/www/index.html
+        loader.loadUrl("file:///android_asset/www/index.html");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // This calls the javascript function in our webview when we click our button
-                String jsString = "javascript:updateLocation('this is a new location')";
-                myWebView.loadUrl(jsString);
+                String location = "this is a new location";
+                loader.updateLocation(location);
 
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
             }
         });
-        // This loads data from src/main/assets/www/index.html
-        myWebView.loadUrl("file:///android_asset/www/index.html");
     }
 
     @Override

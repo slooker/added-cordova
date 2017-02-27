@@ -3,10 +3,17 @@
     <title>
         This is a test page.
     </title>
+    <script>
+        function updateLocation(location) {
+            document.getElementById('location').innerHTML = location;
+            Native.javaLog(location);
+        }
+    </script>
 </head>
 
 <body>
-    This is a test.
+    This is a test.<br />
+    Location: <span id="location">No location</span><br />
     <a href="http://test.slooker.us/">Link to external site</a><br />
     <img src="images/owl.jpg">
 </body>
