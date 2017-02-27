@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @JavascriptInterface
-    public void logSomething() {
-        System.out.println("Logged something");
+    public void logSomething(String something) {
+        System.out.println("Logged something: " + something);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // Setup webview
         final WebView myWebView = (WebView) findViewById(R.id.myWebView);
         WebSettings webSettings = myWebView.getSettings();
-        // This makes an "Android" object in our webview that we can use to pass data back.
+        // This makes a "Native" object in our webview that we can use to pass data back.
         myWebView.addJavascriptInterface(this, "Native");
 
 
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         // This enables javascript, which webviews have disabled by default
         webSettings.setJavaScriptEnabled(true);
-        myWebView.setBackgroundColor(Color.BLUE);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,38 +71,10 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
-                gotoCordova();
-
             }
         });
-
-
-        // This is obviously our ugly html string
-        String html = "<html><head><title>Test Title</title>" +
-                "</head><body>this is a test<br /><div id='location'>No location</div>" +
-                " <a href=\"http://test.slooker.us/\">Link to external site</a>" +
-                "<script>" +
-                "document.addEventListener(\"deviceready\", onDeviceReady, false);\n" +
-                "function onDeviceReady() {\n" +
-                "    window.open = cordova.InAppBrowser.open;\n" +
-                "}" +
-                "function updateLocation(location) {" +
-                "  document.getElementById('location').innerHTML = location;" +
-                "  alert('new location');" +
-                "  console.log('new location is here!');" +
-                "  console.log(location);" +
-                "  Native.sendData(location)" +
-                "}" +
-                "</script>" +
-                "</body></html>";
-        // This loads the data locally.
-        myWebView.loadData(html, "text/html; charset=utf-8", "UTF-8");
-    }
-
-    public void gotoCordova() {
-        System.out.println("going to cordova?");
-        Intent intent = new Intent(this, LaunchCordova.class);
-        startActivity(intent);
+        // This loads data from src/main/assets/www/index.html
+        myWebView.loadUrl("file:///android_asset/www/index.html");
     }
 
     @Override

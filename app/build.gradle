@@ -27,5 +27,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
     testCompile 'junit:junit:4.12'
-    compile files('libs/cordova-6.2.0-dev.jar')
 }
