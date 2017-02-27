@@ -19,11 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CordovaActivity"
-            android:label="@string/title_activity_cordova"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LaunchCordova"></activity>
     </application>
 
 </manifest>
