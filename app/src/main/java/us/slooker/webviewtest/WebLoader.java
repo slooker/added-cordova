@@ -1,6 +1,7 @@
 package us.slooker.webviewtest;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -9,6 +10,13 @@ import android.webkit.WebViewClient;
 
 public class WebLoader {
     WebView view;
+    Activity activity;
+
+    @JavascriptInterface
+    public void launchLoginScreen() {
+        Intent intent = new Intent(this.activity, FakeLoginScreen.class);
+        this.activity.startActivity(intent);
+    }
 
     @JavascriptInterface
     public void javaLog(String logData) {
@@ -27,6 +35,7 @@ public class WebLoader {
      * @param activity - Activity of the caller
      */
     public void createWebView(int id, Activity activity) {
+        this.activity = activity;
         view = (WebView) activity.findViewById(id);
         WebSettings webSettings = view.getSettings();
         // This makes a "Native" object in our webview that we can use to pass data back.
