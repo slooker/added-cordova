@@ -32,20 +32,6 @@ public class MainActivity extends AppCompatActivity {
         loader.createWebView(R.id.myWebView, this);
         // This loads data from src/main/assets/www/index.html
         loader.loadUrl("file:///android_asset/www/index.html");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // This calls the javascript function in our webview when we click our button
-                String location = "this is a new location";
-                loader.updateLocation(location);
-
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-            }
-        });
     }
 
     @Override
